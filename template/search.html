@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+ <a class="btn btn-primary m-3" href="{% url 'app3:home' %}" >Back to Home</a>
+<div class="container" style="padding: 30px;">
+
+    <form method="POST">
+        {% csrf_token %}
+        <h2>Search</h2>
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <div>
+        {% if sr %}
+        {% for i in sr %}
+        <table class="table table-striped">
+            <tr>
+                <td>Author</td>
+                <td>{{i.author}}</td>
+            </tr>
+            <tr>
+                <td>Book</td>
+                <td>{{i.title}}</td>
+            </tr>
+            <tr>
+                <td>pdf</td>
+                <td><a href="{{i.pdf.url}}">{{i.pdf}}</a></td>
+            </tr>
+            <tr>
+                <td>image</td>
+                <td>
+                    {% if i.cover %}<img src="{{ i.cover.url }}" alt="{{ i.title }} "
+                                         style="width: 200px; height: 150px;" class="border border-info">
+                    {% else %}
+                    <span>no cover</span>
+                    {% endif %}
+                </td>
+
+            </tr>
+        </table>
+        {% endfor %}
+        {% endif %}
+
+
+    </div>
+</div>
+</body>
+</html>
